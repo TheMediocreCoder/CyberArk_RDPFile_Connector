@@ -20,4 +20,4 @@ Download the Create_RDP_Files.ps1 & update value of $psm_server_IP to your PSM s
 P.S.:
 If you are logged in with Domain credentials. Script will automatically fill your username in format Domain/Username & Domain DNS.
 
-Thanks to @pspete for reviewing the code and suggesting Readme & adding PSM Server as User field.
+Special Thanks to @pspete for taking out time & reviewing the code.
