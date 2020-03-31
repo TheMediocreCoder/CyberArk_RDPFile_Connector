@@ -210,7 +210,6 @@ $bttn_Connect.AutoSize            = $true
 $bttn_Connect.Font                = "$($font_type),$($lbl_font_size)"
 $bttn_Connect.Text                = "Connect via CyberArk"
 $i++
-$Generate_PSM_RDP_File.AcceptButton = $bttn_Connect
 
 $lbl_Status = New-Object System.Windows.Forms.Label
 $lbl_Status.Location              = New-Object System.Drawing.Point($lbl_x,($line1_y*$i))
@@ -223,6 +222,7 @@ $lbl_Status.ForeColor             = "Red"
 $statusbar = New-Object System.Windows.Forms.StatusBar
 $statusbar.Text = "This Script is not affiliated to CyberArk Software Ltd.`n`rCreated & Managed by: https://github.com/TheMediocreCoder"
 
+$Generate_PSM_RDP_File.AcceptButton = $bttn_Connect
 
 ###################End of Elements###################
 #####################################################
