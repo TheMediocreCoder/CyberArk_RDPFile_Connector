@@ -1,5 +1,17 @@
 ﻿<#
 Connect to CyberArk Target servers transparently
+
++V1.1
+Enhancement Request - Add Description to Labels | https://github.com/TheMediocreCoder/CyberArk_RDPFile_Connector/issues/1
+--- Added Descriptions to the Input Fields
+    Username - Field must be in domain\user format.
+    Target Username - Target Username can only contain AlphaNum _ (underscore) -(hyphen)
+    Target Address - Address must be in either FQDN,hostname or IP format.
+
+Enhancement Request - Add AutoSelection | https://github.com/TheMediocreCoder/CyberArk_RDPFile_Connector/issues/2
+--- Added Functionality to Hit Submit button using Enter Button
+--- Renamed the button text to Connect via CyberArk
+
 #>
 
 ###################Update This#######################
@@ -46,6 +58,18 @@ $font_type = "Microsoft Sans Serif"
 
 ###################Form Definition###################
 #####################################################
+#Add ToolTip
+$Tooltip = New-Object System.Windows.Forms.ToolTip 
+$ShowHelp = { 
+    Switch ($this.name) { 
+        'txt_Username'           {$Tip = "Username should be in format Domain\Username.`nTarget Username can only contain AlphaNum _ (underscore) -(hyphen)"; Break} 
+        'txt_Target_Username'    {$Tip = "Target Username cannot be in domain\user format.`nTarget Username can only contain AlphaNum _ (underscore) -(hyphen)"; Break} 
+        'txt_Target_Address'     {$Tip = "Address must be in either FQDN,hostname or IP format"; Break} 
+    } 
+    $Tooltip.SetToolTip($this,$Tip) 
+}
+$Tooltip.IsBalloon = $stream
+
 #Define Form
 $Generate_PSM_RDP_File                  = New-Object system.Windows.Forms.Form
 $Generate_PSM_RDP_File.ClientSize       = "$form_width,$form_height"
@@ -53,23 +77,15 @@ $Generate_PSM_RDP_File.text             = "  CyberArk RDP File"
 $Generate_PSM_RDP_File.TopMost          = $false
 $Generate_PSM_RDP_File.StartPosition    = "CenterScreen"
 $Generate_PSM_RDP_File.MaximizeBox      = $false
-
-#Form Icon
-$iconBase64      = "AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wC3fT1Qt3094KxdAOCsXQBQ////AP///wD///8A////AP///wD///8A////AP///wD///8A////ALd9PTC3fT3At309/7d9Pf+sXQD/rF0A/6xdAMCsXQAw////AP///wD///8A////AP///wD///8At309ELd9PaC3fT3/t309/7d9Pf+3fT3/rF0A/6xdAP+sXQD/rF0A/6xdAKCsXQAQ////AP///wD///8At309gLd9PfC3fT3/t309/7d9Pf+3fT3/t309/6xdAP+sXQD/rF0A/6xdAP+sXQD/rF0A8KxdAID///8A////AK1fBPCzcyn1t309/7d9Pf+3fT3/t3098Ld9PYCsXQCArF0A8KxdAP+sXQD/rF0A/6xdAP+sXQD/////AP///wCsXQD/rF0A/65jC+u1dzL/t309oLd9PRD///8A////AKxdABCsXQCgrF0A/6xdAP+sXQD/rF0A/////wD///8ArF0A/6xdAP+sXQD/eV09wGBdXKBgXVwQ////AP///wD///8AnpuZUJ+XkMysXQDArF0A/6xdAP////8A////AKxdAP+sXQD/rF0A/3ldPcBgXVz/YF1c8GBdXICem5lgnpuZ4J6bmf+em5n/////AKxdAFCsXQDg////AP///wCsXQD/rF0A/6xdAP95XT3AYF1c/2BdXP9gXVz/npuZ/56bmf+em5n/npuZ/////wD///8A////AP///wD///8ArF0A/6xdAP+sXQD/eV09wGBdXP9gXVz/YF1c/56bmf+em5n/npuZ/56bmf////8A////AP///wD///8A////AKxdAP+sXQD/rmML6KVyOv9vY1foYF1c/2BdXP+em5n/npuZ/5+Xj/CndTz2rF0A0KxdADD///8A////AP///wCtXwTws3Mp9bd9Pf+3fT3/t309/5tzR/VmX1rwn5eP8Kd1PPasXQD/rF0A/6xdAP+sXQD/rF0AgP///wD///8At309gLd9PfC3fT3/t309/7d9Pf+3fT3/t309/6xdAP+sXQD/rF0A/6xdAP+sXQD/rF0A8KxdAID///8A////AP///wC3fT0Qt309oLd9Pf+3fT3/t309/7d9Pf+sXQD/rF0A/6xdAP+sXQD/rF0AoKxdABD///8A////AP///wD///8A////AP///wC3fT0wt309wLd9Pf+3fT3/rF0A/6xdAP+sXQDArF0AMP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wC3fT1Qt3094KxdAOCsXQBQ////AP///wD///8A////AP///wD///8A/D8AAPAPAADAAwAAgAEAAIABAACBgQAAgcEAAIAJAACADwAAgA8AAIADAACAAQAAgAEAAMADAADwDwAA/D8AAA=="
-$iconBytes       = [Convert]::FromBase64String($iconBase64)
-$stream          = New-Object IO.MemoryStream($iconBytes, 0, $iconBytes.Length)
-$stream.Write($iconBytes, 0, $iconBytes.Length);
-$iconImage       = [System.Drawing.Image]::FromStream($stream, $true)
-$Generate_PSM_RDP_File.Icon = [System.Drawing.Icon]::FromHandle((New-Object System.Drawing.Bitmap -Argument $stream).GetHIcon())
+#$Generate_PSM_RDP_File.AutoScale        = $true
+$Generate_PSM_RDP_File.AutoScroll       = $true
 
 ################End of Form Definition###############
 #####################################################
 
-
 function Hide-Console
 {
     $consolePtr = [Console.Window]::GetConsoleWindow()
-    #0 hide
     [Console.Window]::ShowWindow($consolePtr, 0)
 }
 
@@ -83,12 +99,15 @@ $lbl_Username.location           = New-Object System.Drawing.Point($label_x,($li
 $lbl_Username.Font               = "$($font_type),$($lbl_font_size)"
 
 $txt_Username                    = New-Object system.Windows.Forms.TextBox
+$txt_Username.Name               = "txt_Username"
 $txt_Username.multiline          = $false
 $txt_Username.AutoSize           = $true
 $txt_Username.width              = $txt_width
 $txt_Username.height             = $txt_height
 $txt_Username.location           = New-Object System.Drawing.Point($txt_x,($line1_y*$i))
 $txt_Username.Font               = "$($font_type),$($txt_font_size)"
+$txt_Username.add_MouseHover($ShowHelp)
+$txt_Username.add_MouseClick($ShowHelp)
 $i++
 
 #Element2 - Target Username
@@ -99,15 +118,20 @@ $lbl_Target_Username.location    = New-Object System.Drawing.Point($label_x,($li
 $lbl_Target_Username.Font        = "$($font_type),$($lbl_font_size)"
 
 $txt_Target_Username             = New-Object system.Windows.Forms.TextBox
+$txt_Target_Username.Name        = "txt_Target_Username"
 $txt_Target_Username.multiline   = $false
 $txt_Target_Username.AutoSize    = $true
 $txt_Target_Username.width       = $txt_width
 $txt_Target_Username.height      = $txt_height
 $txt_Target_Username.location    = New-Object System.Drawing.Point($txt_x,($line1_y*$i))
 $txt_Target_Username.Font        = "$($font_type),$($txt_font_size)"
+$txt_Target_Username.add_MouseHover($ShowHelp)
+$txt_Target_Username.add_MouseClick($ShowHelp)
+$Generate_PSM_RDP_File.add_Shown({$txt_Target_Username.Select()})
 $i++
 
-#Element3 - Target Address
+
+#Element3 - Target Addrsess
 $lbl_Target_Address               = New-Object system.Windows.Forms.Label
 $lbl_Target_Address.text          = "Target Address"
 $lbl_Target_Address.AutoSize      = $true
@@ -115,12 +139,15 @@ $lbl_Target_Address.location      = New-Object System.Drawing.Point($label_x,($l
 $lbl_Target_Address.Font          = "$($font_type),$($lbl_font_size)"
 
 $txt_Target_Address              = New-Object system.Windows.Forms.TextBox
+$txt_Target_Address.Name         = "txt_Target_Address"
 $txt_Target_Address.multiline    = $false
 $txt_Target_Address.AutoSize     = $true
 $txt_Target_Address.width        = $txt_width
 $txt_Target_Address.height       = $txt_height
 $txt_Target_Address.location     = New-Object System.Drawing.Point($txt_x,($line1_y*$i))
 $txt_Target_Address.Font         = "$($font_type),$($txt_font_size)"
+$txt_Target_Address.add_MouseHover($ShowHelp)
+$txt_Target_Address.add_MouseClick($ShowHelp)
 $i++
 
 #Element4 - Domain Name
@@ -168,32 +195,33 @@ $rb_Account_Type1.location        = New-Object System.Drawing.Point($txt_x,($lin
 $rb_Account_Type1.Text            = "Domain"
 $rb_Account_Type1.AutoSize        = $true
 $rb_Account_Type1.Font            = "$($font_type),$($lbl_font_size)"
-$rb_Account_Type2                  = New-Object System.Windows.Forms.RadioButton
-$rb_Account_Type2.location         = New-Object System.Drawing.Point(($txt_x+200),($line1_y*$i))
-$rb_Account_Type2.text             = "Local"
-$rb_Account_Type2.AutoSize         = $true
-$rb_Account_Type2.Font             = "$($font_type),$($lbl_font_size)"
-#$rb_Account_Type2.AutoCheck        = $false
+$rb_Account_Type2                 = New-Object System.Windows.Forms.RadioButton
+$rb_Account_Type2.location        = New-Object System.Drawing.Point(($txt_x+200),($line1_y*$i))
+$rb_Account_Type2.text            = "Local"
+$rb_Account_Type2.AutoSize        = $true
+$rb_Account_Type2.Font            = "$($font_type),$($lbl_font_size)"
+#$rb_Account_Type2.AutoCheck      = $false
 $i++
 
 #Element7 - Account Type - Radio Button - Domain or Local (Default: Domain)
-$bttn_Connect                       = New-Object System.Windows.Forms.Button
-$bttn_Connect.Location              = New-Object System.Drawing.Point(($form_width/3),($line1_y*$i))
-$bttn_Connect.AutoSize              = $true
-$bttn_Connect.Font                  = "$($font_type),$($lbl_font_size)"
-$bttn_Connect.Text                  = "Connect To Target via CyberArk"
-$i++;
+$bttn_Connect                     = New-Object System.Windows.Forms.Button
+$bttn_Connect.Location            = New-Object System.Drawing.Point((($form_width/2)-70),($line1_y*$i))
+$bttn_Connect.AutoSize            = $true
+$bttn_Connect.Font                = "$($font_type),$($lbl_font_size)"
+$bttn_Connect.Text                = "Connect via CyberArk"
+$i++
+$Generate_PSM_RDP_File.AcceptButton = $bttn_Connect
 
 $lbl_Status = New-Object System.Windows.Forms.Label
 $lbl_Status.Location              = New-Object System.Drawing.Point($lbl_x,($line1_y*$i))
-$lbl_Status.AutoSize = $true
-$lbl_Status.Text = ""
-$lbl_height = 80
+$lbl_Status.AutoSize              = $true
+$lbl_Status.Text                  = ""
+$lbl_height                       = 80
 $lbl_Status.Font                  = "$($font_type),$($lbl_font_size)"
-$lbl_Status.ForeColor = "Red"
+$lbl_Status.ForeColor             = "Red"
 
 $statusbar = New-Object System.Windows.Forms.StatusBar
-$statusbar.Text = "This Script is not affiliated to CyberArk Software Ltd.`n`rCreated & Managedby: https://github.com/TheMediocreCoder"
+$statusbar.Text = "This Script is not affiliated to CyberArk Software Ltd.`n`rCreated & Managed by: https://github.com/TheMediocreCoder"
 
 
 ###################End of Elements###################
@@ -283,9 +311,9 @@ $bttn_Connect.Add_Click(
         $lbl_Status.Text += "`n`rUsername should be in format Domain\Username"
         $flag_Validation_error = 1
     }
-    elseif(($txt_Username.Text.Length -le 3) -or ($txt_Username.Text.Length -ge 20))
+    elseif(($txt_Username.Text.Length -lt 3) -or ($txt_Username.Text.Length -ge 25))
     {
-        $lbl_Status.Text += "`n`rAllowed length of Username is 3 to 20 characters."
+        $lbl_Status.Text += "`n`rAllowed length of Username is 3 to 25 characters."
         $flag_Validation_error = 1
     }
 
@@ -329,7 +357,7 @@ $bttn_Connect.Add_Click(
             $lbl_Status.Text += "`r`nTarget Address Value Missing"
             $flag_Validation_error = 1
     }
-    elseif (($txt_Target_Address.Text -notmatch "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$") -and ($txt_Target_Address.Text -notmatch "^[a-z A-Z 0-9]+$"))
+    elseif (($txt_Target_Address.Text -notmatch "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$") -and ($txt_Target_Address.Text -notmatch "^[a-zA-Z0-9-\._]+$"))
     {
         $lbl_Status.Text += "`r`nInvalid IP address or Hostname.`r`nHostname only accepts Alphanum, _(underscore), -(hyphen)."
         $flag_Validation_error = 1
