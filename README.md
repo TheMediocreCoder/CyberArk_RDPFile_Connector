@@ -12,7 +12,7 @@ Download the Create_RDP_Files.ps1 & update value of $psm_server_IP to your PSM s
 
 ### Update PSM Server Value to PSM Server IP Address or Load-balanced VIP like psm.carklab.local
 
-![Image of UpdatePSMIP](https://github.com/TheMediocreCoder/CyberArk_RDPFile_Connector/blob/master/docs/images/Update_PSM_Value.jpg)
+![Image of UpdatePSMIP](https://github.com/TheMediocreCoder/CyberArk_RDPFile_Connector/blob/master/docs/images/Update_PSMServer_Value.jpg)
 
 ### Option 1:
 
