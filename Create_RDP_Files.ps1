@@ -62,7 +62,7 @@ $font_type = "Microsoft Sans Serif"
 $Tooltip = New-Object System.Windows.Forms.ToolTip 
 $ShowHelp = { 
     Switch ($this.name) { 
-        'txt_Username'           {$Tip = "Username should be in format Domain\Username.`nTarget Username can only contain AlphaNum _ (underscore) -(hyphen)"; Break} 
+        'txt_Username'           {$Tip = "Username should be in format Domain\Username.`n Username can only contain AlphaNum _ (underscore) -(hyphen)"; Break} 
         'txt_Target_Username'    {$Tip = "Target Username cannot be in domain\user format.`nTarget Username can only contain AlphaNum _ (underscore) -(hyphen)"; Break} 
         'txt_Target_Address'     {$Tip = "Address must be in either FQDN,hostname or IP format"; Break} 
     } 
@@ -306,7 +306,7 @@ $bttn_Connect.Add_Click(
         $lbl_Status.Text += "`n`rUsername Value Missing"
         $flag_Validation_error = 1
     }
-    elseif ($txt_Username.Text -notmatch "^[a-z A-z]{2,20}\\[a-z A-Z 0-9]+$")
+    elseif ($txt_Username.Text -notmatch "^[a-z A-z 0-9-_.]{2,20}\\[a-z A-Z 0-9-_.]+$")
     {
         $lbl_Status.Text += "`n`rUsername should be in format Domain\Username"
         $flag_Validation_error = 1
